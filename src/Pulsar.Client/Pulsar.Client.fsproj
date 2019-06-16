@@ -15,6 +15,7 @@
     <Compile Include="Common\DTO.fs" />
     <Compile Include="Common\Topic.fs" />
     <Compile Include="Common\Commands.fs" />
+    <Compile Include="Common\PulsarDecoder.fs" />
     <Compile Include="Api\Configuration.fs" />
     <Compile Include="Api\Message.fs" />
     <Compile Include="Internal\Generators.fs" />

@@ -25,15 +25,14 @@ type BinaryLookupService (config: PulsarClientConfiguration) =
             let! flushResult = conn.Output.WriteAsync(request)
             conn.Output.Complete()
             let mutable continueLooping = true
-            let mutable partitionedTopicMetadata = {Partitions= 0}
+            let mutable partitionedTopicMetadata = {Partitions= 0u}
             while continueLooping do
                 let! result = conn.Input.ReadAsync()
                 let buffer = result.Buffer
                 if result.IsCompleted
                 then
                     let array = result.Buffer.ToArray()
-                    // TODO: correct deserialization
-                    partitionedTopicMetadata <- JsonSerializer.Deserialize<PartitionedTopicMetadata>(array)
+                    partitionedTopicMetadata <- PulsarDecoder.handlePartitionResponse array
                     continueLooping <- false
                 else
                     conn.Input.AdvanceTo(buffer.Start, buffer.End)
