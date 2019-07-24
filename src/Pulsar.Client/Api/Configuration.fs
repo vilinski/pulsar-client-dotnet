@@ -1,7 +1,7 @@
 ﻿namespace Pulsar.Client.Api
 
 open Pulsar.Client.Common
-open FSharp.UMX
+open System
 
 type PulsarClientConfiguration =
     {
@@ -34,10 +34,16 @@ type ProducerConfiguration =
         Topic: TopicName
         ProducerName: string
         MaxPendingMessages: int
+        BatchingEnabled: bool
+        MaxMessagesPerBatch: int
+        MaxBatchingPublishDelay: TimeSpan
     }
     static member Default =
         {
             Topic = Unchecked.defaultof<TopicName>
             ProducerName = ""
             MaxPendingMessages = 1000
+            BatchingEnabled = true
+            MaxMessagesPerBatch = 1000
+            MaxBatchingPublishDelay = TimeSpan.FromMilliseconds(1.)
         }
